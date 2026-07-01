@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de Publicacion</title>
+</head>
+<body>
+ 
+<h1>Publicacion</h1>
+ 
+<p th:if="${error}" th:text="${error}" style="color:red"></p>
+ 
+<form th:action="${publicacion.id == null}
+        ? @{/publicaciones/nueva}
+        : @{/publicaciones/editar/{id}(id=${publicacion.id})}"
+      th:object="${publicacion}" method="post">
+ 
+    <p>
+        <label>Propiedad:</label>
+        <select th:field="*{propiedad}" required
+                th:disabled="${publicacion.id != null}">
+            <option value="">-- Seleccionar --</option>
+            <option th:each="p : ${propiedades}"
+                    th:value="${p.id}" th:text="${p.direccion}"></option>
+        </select>
+    </p>
+ 
+    <p>
+        <label>Precio Mensual:</label>
+        <input type="number" step="0.01" th:field="*{precioMensual}"
+               min="0.1" required>
+    </p>
+ 
+    <p>
+        <label>Condiciones:</label>
+        <textarea th:field="*{condiciones}" required></textarea>
+    </p>
+ 
+    <p>
+        <label>Descripcion:</label>
+        <textarea th:field="*{descripcion}" required></textarea>
+    </p>
+ 
+    <p>
+        <label>Fecha de Publicacion:</label>
+        <input type="date" th:field="*{fechaPublicacion}" required>
+    </p>
+ 
+    <p>
+        <label>Estado:</label>
+        <select th:field="*{estado}" required>
+            <option value="">-- Seleccionar --</option>
+            <option th:each="e : ${estados}"
+                    th:value="${e}" th:text="${e}"></option>
+        </select>
+    </p>
+ 
+	   <button type="submit">Guardar</button>
+	    <a href="/publicaciones">Cancelar</a>
+	 
+	</form>
+	 
+	</body>
+	</html>
+
