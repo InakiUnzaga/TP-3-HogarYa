@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulario de Propiedad</title>
+</head>
+<body>
+
+<h1>Propiedad</h1>
+
+<p th:if="${error}" th:text="${error}" style="color:red"></p>
+
+<form th:action="${propiedad.id == null} ? @{/propiedades/nueva} : @{/propiedades/editar/{id}(id=${propiedad.id})}"
+      th:object="${propiedad}" method="post">
+
+  <p>
+    <label>Dirección:</label>
+    <input type="text" th:field="*{direccion}" required>
+  </p>
+
+  <p>
+    <label>Ciudad:</label>
+    <select th:field="*{ciudad}" required>
+      <option value="">-- Seleccionar --</option>
+      <option th:each="c : ${ciudades}" th:value="${c.id}" th:text="${c.nombre}"></option>
+    </select>
+  </p>
+
+  <p>
+    <label>Tipo:</label>
+    <select th:field="*{tipo}" required>
+      <option value="">-- Seleccionar --</option>
+      <option th:each="t : ${tipos}" th:value="${t}" th:text="${t}"></option>
+    </select>
+  </p>
+
+  <p>
+    <label>Ambientes:</label>
+    <input type="number" th:field="*{cantidadAmbientes}" min="1" required>
+  </p>
+
+  <p>
+    <label>Metros²:</label>
+    <input type="number" step="0.1" th:field="*{metrosCuadrados}" min="0.1" required>
+  </p>
+
+  <p>
+    <label>Estado:</label>
+    <select th:field="*{estadoDisponibilidad}" required>
+      <option value="">-- Seleccionar --</option>
+      <option th:each="e : ${estados}" th:value="${e}" th:text="${e}"></option>
+    </select>
+  </p>
+
+  <p>
+    <label>Propietario:</label>
+    <select th:field="*{propietario}" required>
+      <option value="">-- Seleccionar --</option>
+      <option th:each="p : ${propietarios}" th:value="${p.id}" th:text="${p.nombre}"></option>
+    </select>
+  </p>
+
+  <p>
+    <label>Descripción:</label>
+    <textarea th:field="*{descripcion}" required></textarea>
+  </p>
+
+  <p>
+    <label>Comodidades:</label>
+    <textarea th:field="*{comodidades}"></textarea>
+  </p>
+
+  <button type="submit">Guardar</button>
+  <a href="/propiedades">Cancelar</a>
+
+</form>
+
+</body>
+</html>
