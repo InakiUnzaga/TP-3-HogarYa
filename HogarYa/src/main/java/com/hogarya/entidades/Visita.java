@@ -10,6 +10,7 @@ public class Visita {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     private EstadoVisita estado;
@@ -18,7 +19,6 @@ public class Visita {
     @JoinColumn(name = "publicacion_id")
     private Publicacion publicacion;
 
-    private Long id;
 
     private LocalDateTime fechaHora;
 

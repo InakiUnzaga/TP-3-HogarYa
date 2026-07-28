@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de Contrato</title>
+</head>
+<body>
+
+<h1>Contrato</h1>
+
+<p th:if="${error}" th:text="${error}" style="color:red"></p>
+
+<form th:action="${contrato.id == null} 
+        ? @{/contratos/nuevo} 
+        : @{/contratos/editar/{id}(id=${contrato.id})}"
+      th:object="${contrato}" method="post">
+
+    <p>
+        <label>Propiedad:</label>
+        <select th:field="*{propiedad}" required>
+            <option value="">-- Seleccionar --</option>
+            <option th:each="p : ${propiedades}"
+                    th:value="${p.id}" th:text="${p.direccion}"></option>
+        </select>
+    </p>
+
+    <p>
+        <label>Inquilino:</label>
+        <select th:field="*{inquilino}" required>
+            <option value="">-- Seleccionar --</option>
+            <option th:each="i : ${inquilinos}"
+                    th:value="${i.id}"
+                    th:text="${i.apellido + ', ' + i.nombre}"></option>
+        </select>
+    </p>
+    <p>
+        <label>Fecha de inicio:</label>
+        <input type="date" th:field="*{fechaInicio}" required>
+    </p>
+
+    <p>
+        <label>Duracion en meses:</label>
+        <input type="number" th:field="*{duracionMeses}" min="1" required>
+    </p>
+
+    <p>
+        <label>Importe mensual:</label>
+        <input type="number" step="0.01" th:field="*{importeMensual}" min="0.1" required>
+    </p>
+
+    <p>
+        <label>Dia de vencimiento mensual (1-31):</label>
+        <input type="number" th:field="*{diaVencimientoMensual}" min="1" max="31" required>
+    </p>
+
+    <p>
+        <label>Descripcion:</label>
+        <textarea th:field="*{descripcion}" required></textarea>
+    </p>
+    <p>
+        <label>Estado:</label>
+        <select th:field="*{estado}" required>
+            <option value="">-- Seleccionar --</option>
+            <option th:each="e : ${estados}"
+                    th:value="${e}" th:text="${e}"></option>
+        </select>
+    </p>
+    <button type="submit">Guardar</button>
+    <a href="/contratos">Cancelar</a>
+</form>
+</body>
+</html>
